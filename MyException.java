@@ -14,9 +14,8 @@ public class UserInfoApp {
     public static void User() {
         Scanner scanner = new Scanner(System.in);
         
-        System.out.println("Enter your data (Surname Name MiddleName DateOfBirth PhoneNumber Gender):");
-        String input = scanner.nextLine(); // Чтение строки ввода
-
+        System.out.println("Enter your data (Surname,Name,MiddleName,DateOfBirth,PhoneNumber,Gender):");
+        String input = scanner.nextLine(); 
         try {
             List<String> parts = split(input, ' ');
                 if (parts.size() != 6) {
@@ -25,9 +24,11 @@ public class UserInfoApp {
             String surname = parts.get(0);
             String name = parts.get(1);
             String middleName = parts.get(2);
+            
             Date dateOfBirth = parseDate(parts.get(3));
             long phoneNumber = parsePhoneNumber(parts.get(4));
             char gender = parseGender(parts.get(5));
+            
             writeToFile(surname, name, middleName, dateOfBirth, phoneNumber, gender);
         } catch (IllegalArgumentException e) {
             System.err.println("Error: " + e.getMessage());
@@ -63,12 +64,12 @@ public class UserInfoApp {
     }
 
     private static void writeToFile(String surname, String name, String middleName, Date dateOfBirth, long phoneNumber, char gender) {
-        String filename = surname + ".txt"; // Формирование имени файла
+        String filename = surname + ".txt"; 
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         String line = surname + " " + name + " " + middleName + " " + sdf.format(dateOfBirth) + " " + phoneNumber + " " + gender;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
             writer.write(line);
-            writer.newLine(); // Переход на новую строку
+            writer.newLine(); 
         } catch (IOException e) {
             System.err.println("Error writing to file: " + e.getMessage());
         }
